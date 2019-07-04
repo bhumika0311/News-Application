@@ -1,5 +1,7 @@
 var app = angular.module('newsApp', []);
 
+// let base_url = 'https://newsapi.org/v2/everything?apiKey=85c3b3c07b8c403f9c800fe512f59f6b&sources='
+
 app.controller('newsViewController', ['$scope', function($scope){
     $scope.channels = [
         {
@@ -22,6 +24,8 @@ app.controller('newsViewController', ['$scope', function($scope){
             name:'India News',
             countries: ["India", "USA", "UK"]
         }
+    ];
+
 
 
 
@@ -30,41 +34,68 @@ app.controller('newsViewController', ['$scope', function($scope){
     // $scope.showNews = function(){
     //     $scope.channel.number++ ;
     // }
-];
 
 }]);
 
 app.controller('newsViewController', function($scope, HttpService) {
-    HttpService.getPost()
-    .then(function(response) {
-    $scope.post = response;
-  });
+    
+//     HttpService.getPost()
+//     .then(function(response) {
+//     $scope.post = response;
+//   });
 
   HttpService.getSources()
   .then(function(response) {
    $scope.sourceWebsites = response;
  });
+
+ HttpService.showNews()
+  .then(function(response) {
+   $scope.news = response;
+ });
+
+ HttpService.showCards()
+ .then(function(response) {
+  $scope.cards = response;
+});
+
+ $scope.showCards = function(index){
+        var i = $scope.sourceWebsites.sources[index].id;
+        console.log(i)
+        return i; 
+    }
 })
+
 
 .service('HttpService', function($http) {
     return {
-        getPost: function() {
-          // $http returns a promise, which has a then function, which also returns a promise.
-          return $http.get('http://jsonplaceholder.typicode.com/posts/1')
-            .then(function (response) {
-            // In the response, resp.data contains the result. Check the console to see all of the data returned.
-            console.log('Get Post', response);
-            return response.data;
-          });
-        },
         getSources: function() {
-          // $http returns a promise, which has a then function, which also returns a promise.
           return $http.get('https://newsapi.org/v2/sources?apiKey=85c3b3c07b8c403f9c800fe512f59f6b')
             .then(function(response) {
-            // In the response, resp.data contains the result. Check the console to see all of the data returned.
             console.log('Get Sources', response);
             return response.data;
           });
-        }
+        },
+
+        showCards: function(){
+            // var source = document.getElementById('viewNews').value
+            // console.log(source)
+            // console.log($scope.sourceWebsites.sources[index].id)
+            return $http.get('https://newsapi.org/v2/everything?apiKey=85c3b3c07b8c403f9c800fe512f59f6b&sources=mashable')
+            .then(function(response) {
+                console.log('Show Channel Wise', response);
+                return response.data;
+            });
+        },
+
+        showNews: function(){
+            // var source = document.getElementById
+            // console.log(source)
+            return $http.get('https://newsapi.org/v2/everything?sources=the-next-web&apiKey=85c3b3c07b8c403f9c800fe512f59f6b')
+            .then(function(response) {
+                console.log('Show News', response);
+                return response.data;
+            });
+        },
       }
 });
