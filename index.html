@@ -10,7 +10,7 @@
 </head>
 <body ng-controller = 'newsViewController'>
     <h1>{{phrase}}</h1>
-    <p>{{channel.number}} - {{channel.name}} : {{channel.country}}</p>
+    <!-- <p>{{channel.number}} - {{channel.name}} : {{channel.country}}</p>
     <button ng-click = "showNews()"> Open </button>
 
     <div style = "margin-top: 50px;">
@@ -27,6 +27,12 @@
 
     <div style = "margin-top: 50px;">
         <textarea ng-model = "phrase"> </textarea>
-    </div>
+    </div> -->
+
+    <ul>
+        <li ng-repeat = "channel in channels"> {{channel.name}},
+            Countries: <span ng-repeat = "country in channel.countries" style = "color:blue;">
+            {{country}} </span> </li>
+    </ul>
 </body>
 </html>
