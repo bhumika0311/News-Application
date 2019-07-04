@@ -11,6 +11,22 @@
 <body ng-controller = 'newsViewController'>
     <h1>{{phrase}}</h1>
     <p>{{channel.number}} - {{channel.name}} : {{channel.country}}</p>
-    <button ng-click = "showNews"> Open </button>
+    <button ng-click = "showNews()"> Open </button>
+
+    <div style = "margin-top: 50px;">
+        <input ng-model = "channel.number" type = "number" />
+    </div>
+
+    <div style = "margin-top: 50px;">
+        <input ng-model = "channel.name" type = "text" />
+    </div>
+
+    <div style = "margin-top: 50px;">
+        <input ng-model = "channel.country" type = "text" />
+    </div>
+
+    <div style = "margin-top: 50px;">
+        <textarea ng-model = "phrase"> </textarea>
+    </div>
 </body>
 </html>
